@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { filterMenu } from "../variables";
 
 const Filter = () => {
   const [activeIndex, setActiveIndex] = useState("fast");
-  const [inputData, setInputData] = useState(filterMenu);
-  const cheap = [];
   const filterHandler = (index) => {
     setActiveIndex(index);
   };
-  // useEffect(() => {
-  //   if (activeIndex === "cheap") {
-  //     const max = inputData.price
-  //     cheap = filterMenu.filter();
-  //     setInputData(cheap)
-  //   }
-  // }, [activeIndex]);
+
 
   return (
     <div className='filter'>
       <ul>
-        {inputData.map((item) => {
+        {filterMenu.map((item) => {
           return (
             <li
               onClick={() => filterHandler(item.key)}
@@ -33,5 +25,5 @@ const Filter = () => {
     </div>
   );
 };
-
 export default Filter;
+

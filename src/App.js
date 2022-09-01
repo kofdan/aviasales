@@ -1,3 +1,4 @@
+
 import useConnect from "./hooks/useConnect";
 import "./App.css";
 
@@ -8,7 +9,7 @@ import Card from "./components/Card/Card";
 function App() {
   const { data } = useConnect("https://front-test.dev.aviasales.ru/");
   const reducedData = data?.tickets.splice(0, 3);
-  console.log(reducedData);
+  // const asd = reducedData.sort((a, b) => a - b)
   return (
     <>
       <div className='wrapper'>
@@ -18,14 +19,14 @@ function App() {
         <div className='container'>
           <Sidebar />
           <div className='main-content-wrapper'>
-            <Filter />
+            <Filter/>
             <div className='cards-wrapper__items'>
               {reducedData?.map((ticket, index) => {
                 return (
                   <Card
                     key={index}
                     price={ticket.price}
-                    segment={ticket.segments}
+                    segments={ticket.segments}
                   />
                 );
               })}
