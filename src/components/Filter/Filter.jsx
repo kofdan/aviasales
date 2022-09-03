@@ -1,20 +1,13 @@
-import { useState } from "react";
 import { filterMenu } from "../variables";
 
-const Filter = () => {
-  const [activeIndex, setActiveIndex] = useState("fast");
-  const filterHandler = (index) => {
-    setActiveIndex(index);
-  };
-
-
+const Filter = ({ activeIndex, onClickFilterHandler }) => {
   return (
     <div className='filter'>
       <ul>
         {filterMenu.map((item) => {
           return (
             <li
-              onClick={() => filterHandler(item.key)}
+              onClick={() => onClickFilterHandler(item.key)}
               key={item.key}
               className={activeIndex === item.key ? "active" : ""}>
               {item.name}
@@ -26,4 +19,3 @@ const Filter = () => {
   );
 };
 export default Filter;
-

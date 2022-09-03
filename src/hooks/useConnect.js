@@ -1,43 +1,38 @@
 import { useEffect, useState } from "react";
 
-function useConnect(URL) {
+function useConnect() {
   const [data, setData] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${URL}search`)
-      .then((res) => res.json())
-      .then((token) => {
-        setToken(token);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [URL]);
+    getSearchId();
+  }, []);
 
-  useEffect(() => {
-    if (token !== null) {
-      setLoading(true);
-      fetch(`${URL}tickets?searchId=${token.searchId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-        })
-        .catch((err) => {
-          setError(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+  const getSearchId = async () => {
+    const response = await fetch("https://front-test.dev.aviasales.ru/search", {
+      method: "GET",
+    });
+    if (!response.ok) {
+      throw new Error("Data coud not be fetched!");
     }
-  }, [token]);
+    const json = await response.json();
+    const searchID = json?.searchId || "";
+    fetchData(searchID);
+  };
 
-  return { data, loading, error };
+  const fetchData = async (searchID) => {
+    try {
+      const response = await fetch(
+        `https://front-test.dev.aviasales.ru/tickets?searchId=${searchID}`
+      );
+      const json = await response.json();
+
+      setData(json);
+    } catch (error) {
+      throw new Error("Data coud not be fetched!");
+    }
+  };
+
+  return { data };
 }
 
 export default useConnect;

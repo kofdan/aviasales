@@ -1,6 +1,6 @@
 import { filterCheckBox } from "../variables";
 
-const Sidebar = () => {
+const Sidebar = ({ activeRadio, onClickRadioHandler }) => {
   return (
     <div className='sidebar'>
       <p className='sidebar__title'>Количество пересадок</p>
@@ -10,9 +10,12 @@ const Sidebar = () => {
             <div key={item.key} className='sidebar__item'>
               <input
                 className='custom-checkbox'
-                type='checkbox'
-                name={item.key}
+                type='radio'
+                name='radio'
+                id={item.key}
                 value={item.name}
+                onClick={() => onClickRadioHandler(item.key)}
+                defaultChecked={activeRadio === item.key ? true : false}
               />
               <label htmlFor={item.key}>{item.name}</label>
             </div>

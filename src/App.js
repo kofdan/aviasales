@@ -1,40 +1,13 @@
-
 import useConnect from "./hooks/useConnect";
 import "./App.css";
-
-import Filter from "./components/Filter/Filter";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Card from "./components/Card/Card";
-
+import Main from "./components/Main/Main";
+import { useState } from "react";
 function App() {
-  const { data } = useConnect("https://front-test.dev.aviasales.ru/");
-  const reducedData = data?.tickets.splice(0, 3);
-  // const asd = reducedData.sort((a, b) => a - b)
+  const { data } = useConnect();
+
   return (
     <>
-      <div className='wrapper'>
-        <header>
-          <img className='logo' alt='logo' src='./img/Logo.png' />
-        </header>
-        <div className='container'>
-          <Sidebar />
-          <div className='main-content-wrapper'>
-            <Filter/>
-            <div className='cards-wrapper__items'>
-              {reducedData?.map((ticket, index) => {
-                return (
-                  <Card
-                    key={index}
-                    price={ticket.price}
-                    segments={ticket.segments}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <footer></footer>
-      </div>
+      <Main data={data?.tickets.sort((a, b) => a - b).splice(0, 3)} />
     </>
   );
 }
