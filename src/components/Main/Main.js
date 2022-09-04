@@ -1,39 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Filter from "../../components/Filter/Filter";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Card from "../../components/Card/Card";
 const Main = ({ data }) => {
+  let [reducedData, setReducedData] = useState(null);
   const [activeIndex, setActiveIndex] = useState("fast");
   const [activeRadio, setActiveRadio] = useState("all");
-  let reducedData;
-  switch (activeIndex) {
-    case "cheap":
-      reducedData = data?.sort((a, b) => a.price - b.price);
-      break;
-    case "fast":
-      reducedData = data;
 
-      break;
-    case "optimal":
-      reducedData = data?.sort((a, b) => a.price - b.price).reverse();
-      break;
-  }
+  useEffect(() => {
+    setReducedData(data);
 
-  switch (activeRadio) {
-    case "all":
-      reducedData = reducedData;
-      break;
+    switch (activeIndex) {
+      case "cheap":
+        setReducedData(reducedData.sort((a, b) => a.price - b.price));
+        break;
+      case "fast":
+        // reducedData = data;
 
-    case "nonStop":
-      break;
+        break;
+      case "optimal":
+        setReducedData(reducedData.sort((a, b) => a.price - b.price).reverse());
+        break;
+    }
+    switch (activeRadio) {
+      case "all":
+        // reducedData = reducedData;
+        break;
 
-    case "twoStops":
-      break;
+      case "nonStop":
+        // reducedData = reducedData;
+        break;
 
-    case "threeStops":
-      break;
-  }
+      case "twoStops":
+        break;
+
+      case "threeStops":
+        break;
+    }
+  });
+
   return (
     <div className='wrapper'>
       <header>

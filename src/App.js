@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <Main data={data?.tickets.sort((a, b) => a - b).splice(0, 3)} />
+      <Main data={data?.tickets.splice(0, 3)} />
     </>
   );
 }
